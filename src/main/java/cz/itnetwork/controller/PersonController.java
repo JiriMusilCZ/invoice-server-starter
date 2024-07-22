@@ -54,7 +54,11 @@ public class PersonController {
     public PersonDTO getPerson(@PathVariable Long personId){
         return personService.getPerson(personId);
     }
-}
 
-// TODO: dodělat třídy na práci s Invoice (bez implementace)
-// TODO: implementovat InvoiceDTO a InvoiceService
+    @PutMapping({"/persons/{personId}"})
+    public PersonDTO updatePerson(@PathVariable Long personId, @RequestBody PersonDTO personDTO) {
+        return personService.updatePerson(personDTO, personId);
+    }
+
+
+}

@@ -61,6 +61,17 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public PersonDTO updatePerson(PersonDTO updatedPersonDTO, long personId) {
+
+        PersonEntity oldPersonEntity = fetchPersonById(personId);
+        oldPersonEntity.setHidden(true);
+        personRepository.save(oldPersonEntity);
+
+        return addPerson(updatedPersonDTO);
+
+    }
+
+    @Override
     public List<PersonDTO> getAll() {
         return personRepository.findByHidden(false)
                 .stream()
@@ -88,6 +99,8 @@ public class PersonServiceImpl implements PersonService {
     public PersonDTO getPerson(long id) {
       return personMapper.toDTO(fetchPersonById(id));
     }
+
+
 
 
 }

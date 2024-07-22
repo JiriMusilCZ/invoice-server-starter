@@ -31,4 +31,6 @@ public interface PersonService {
 
     PersonDTO getPerson(long id);
 
+    public PersonDTO updatePerson(PersonDTO updatedPersonDTO, long personId);
+
 }

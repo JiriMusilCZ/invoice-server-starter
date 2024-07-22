@@ -9,6 +9,8 @@ import cz.itnetwork.entity.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
 
@@ -23,14 +25,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceTDO addInvoice(InvoiceTDO invoiceTDO) {
-        InvoiceEntity entity = invoiceMapper.toEntity(invoiceTDO);
-        entity = invoiceRepository.save(entity);
-        PersonEntity buyerEntity = personRepository.getReferenceById(entity.getBuyer().getId());
-        entity.setBuyer(buyerEntity);
-        PersonEntity sellerEntity = personRepository.getReferenceById(entity.getSeller().getId());
-        entity.setSeller(sellerEntity);
-        return invoiceMapper.toDTO(entity);
+        InvoiceEntity invoiceEntity = invoiceMapper.toEntity(invoiceTDO);
+        invoiceEntity = invoiceRepository.save(invoiceEntity);
+        PersonEntity buyerEntity = personRepository.getReferenceById(invoiceEntity.getBuyer().getId());
+        invoiceEntity.setBuyer(buyerEntity);
+        PersonEntity sellerEntity = personRepository.getReferenceById(invoiceEntity.getSeller().getId());
+        invoiceEntity.setSeller(sellerEntity);
+        return invoiceMapper.toDTO(invoiceEntity);
     }
+
+
 
 
 }
