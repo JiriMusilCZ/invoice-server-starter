@@ -9,6 +9,7 @@ public interface InvoiceService {
 
     InvoiceTDO addInvoice(InvoiceTDO invoiceTDO);
 
+    List<InvoiceTDO> getInvoiceBuyer(String identificationNumber);
 
 
 }

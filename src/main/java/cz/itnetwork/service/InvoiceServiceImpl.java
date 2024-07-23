@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
@@ -34,7 +35,21 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoiceEntity);
     }
 
+    public List<InvoiceTDO> getInvoiceBuyer(String identificationNumber) {
+        List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
+// Extract IDs from PersonEntity objects
+        List<Long> personIds = persons.stream()
+                .map(PersonEntity::getId)
+                .collect(Collectors.toList());
 
+        // Find all invoices where the buyer_id matches any of the IDs in personIds
+        List<InvoiceEntity> invoices = invoiceRepository.findByBuyerIdIn(personIds);
+
+        // Map the InvoiceEntity objects to InvoiceDTO
+        return invoices.stream()
+                .map(invoiceMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 
 
 }
