@@ -11,8 +11,5 @@ public interface InvoiceService {
 
     List<InvoiceTDO> getInvoices();
 
-    List<InvoiceTDO> getInvoiceBuyer(String identificationNumber);
-
-
-
+    InvoiceTDO getInvoice(long id);
 }

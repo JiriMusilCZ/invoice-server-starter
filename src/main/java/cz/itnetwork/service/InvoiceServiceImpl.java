@@ -6,6 +6,7 @@ import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
 import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,22 +36,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoiceEntity);
     }
 
-    public List<InvoiceTDO> getInvoiceBuyer(String identificationNumber) {
-        List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
-// Extract IDs from PersonEntity objects
-        List<Long> personIds = persons.stream()
-                .map(PersonEntity::getId)
-                .collect(Collectors.toList());
-
-        // Find all invoices where the buyer_id matches any of the IDs in personIds
-        List<InvoiceEntity> invoices = invoiceRepository.findByBuyerIdIn(personIds);
-
-        // Map the InvoiceEntity objects to InvoiceDTO
-        return invoices.stream()
-                .map(invoiceMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
     public List<InvoiceTDO> getInvoices() {
         return invoiceRepository.findAll()
                 .stream()
@@ -58,4 +43,10 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public InvoiceTDO getInvoice(long id) {
+        return invoiceRepository.findById(id)
+                .map(invoiceMapper::toDTO)
+                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + id + " not found"));
+    }
 }

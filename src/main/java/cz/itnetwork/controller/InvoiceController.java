@@ -20,14 +20,13 @@ public class InvoiceController {
         return invoiceService.addInvoice(invoiceDTO);
     }
 
-    @GetMapping("/identification/{identificationNumber}/purchases")
-    public List<InvoiceTDO> getInvoiceBuyer(@PathVariable String identificationNumber) {
-        return invoiceService.getInvoiceBuyer(identificationNumber);
-    }
-
     @GetMapping("/invoices")
-    public List<InvoiceTDO> getInvoices(){
+    public List<InvoiceTDO> getInvoices() {
         return invoiceService.getInvoices();
+    }
+    @GetMapping("/invoices/{invoiceId}")
+    public InvoiceTDO getInvoice(@PathVariable Long invoiceId){
+        return invoiceService.getInvoice(invoiceId);
     }
 
 }

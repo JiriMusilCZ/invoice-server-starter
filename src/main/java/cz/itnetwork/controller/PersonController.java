@@ -21,6 +21,7 @@
  */
 package cz.itnetwork.controller;
 
+import cz.itnetwork.dto.InvoiceTDO;
 import cz.itnetwork.dto.PersonDTO;
 import cz.itnetwork.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,14 @@ public class PersonController {
         return personService.updatePerson(personDTO, personId);
     }
 
+    @GetMapping("/identification/{identificationNumber}/purchases")
+    public List<InvoiceTDO> getInvoiceBuyer(@PathVariable String identificationNumber) {
+        return personService.getInvoiceBuyer(identificationNumber);
+    }
+
+    @GetMapping("/identification/{identificationNumber}/sales")
+    public List<InvoiceTDO> getInvoiceSeller(@PathVariable String identificationNumber) {
+        return personService.getInvoiceSeller(identificationNumber);
+    }
 
 }

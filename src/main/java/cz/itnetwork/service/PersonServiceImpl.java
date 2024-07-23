@@ -21,9 +21,13 @@
  */
 package cz.itnetwork.service;
 
+import cz.itnetwork.dto.InvoiceTDO;
 import cz.itnetwork.dto.PersonDTO;
+import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.dto.mapper.PersonMapper;
+import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
+import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +44,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private InvoiceMapper invoiceMapper;
 
     public PersonDTO addPerson(PersonDTO personDTO) {
         PersonEntity entity = personMapper.toEntity(personDTO);
@@ -80,6 +90,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     // region: Private methods
+
     /**
      * <p>Attempts to fetch a person.</p>
      * <p>In case a person with the passed [id] doesn't exist a [{@link org.webjars.NotFoundException}] is thrown.</p>
@@ -97,10 +108,40 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonDTO getPerson(long id) {
-      return personMapper.toDTO(fetchPersonById(id));
+        return personMapper.toDTO(fetchPersonById(id));
     }
 
+    @Override
+    public List<InvoiceTDO> getInvoiceBuyer(String identificationNumber) {
+        List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
 
+        // Extract IDs from PersonEntity objects
+        List<Long> personIds = persons.stream()
+                .map(PersonEntity::getId)
+                .collect(Collectors.toList());
 
+        // Find all invoices where the buyer_id matches any of the IDs in personIds
+        List<InvoiceEntity> invoices = invoiceRepository.findByBuyerIdIn(personIds);
 
+        // Map the InvoiceEntity objects to InvoiceDTO
+        return invoices.stream()
+                .map(invoiceMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InvoiceTDO> getInvoiceSeller(String identificationNumber) {
+        List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
+
+        // Extract IDs from PersonEntity objects
+        List<Long> personIds = persons.stream()
+                .map(PersonEntity::getId)
+                .collect(Collectors.toList());
+
+        List<InvoiceEntity> invoices = invoiceRepository.findBySellerIdIn(personIds);
+
+        return invoices.stream()
+                .map(invoiceMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }
