@@ -51,5 +51,11 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .collect(Collectors.toList());
     }
 
+    public List<InvoiceTDO> getInvoices() {
+        return invoiceRepository.findAll()
+                .stream()
+                .map(invoiceEntity -> invoiceMapper.toDTO(invoiceEntity))
+                .collect(Collectors.toList());
+    }
 
 }

@@ -25,4 +25,9 @@ public class InvoiceController {
         return invoiceService.getInvoiceBuyer(identificationNumber);
     }
 
+    @GetMapping("/invoices")
+    public List<InvoiceTDO> getInvoices(){
+        return invoiceService.getInvoices();
+    }
+
 }
