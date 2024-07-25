@@ -37,4 +37,6 @@ public interface PersonService {
     List<InvoiceTDO> getInvoiceBuyer(String identificationNumber);
 
     List<InvoiceTDO> getInvoiceSeller(String identificationNumber);
+
+
 }

@@ -8,7 +8,10 @@ import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,6 +51,21 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepository.findById(id)
                 .map(invoiceMapper::toDTO)
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + id + " not found"));
+    }
+
+
+    public ResponseEntity<Void> removeInvoiceById(long id) {
+            InvoiceEntity fetchedInvoice = fetchInvoiceById(id);
+            invoiceRepository.delete(fetchedInvoice);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Stav 204
+
+    }
+
+
+
+    private InvoiceEntity fetchInvoiceById(long id){
+        return invoiceRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Invoice with id" + id + "wasn't found in the database."));
     }
 
 
