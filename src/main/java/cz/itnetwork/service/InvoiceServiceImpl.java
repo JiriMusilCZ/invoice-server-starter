@@ -47,10 +47,9 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceTDO getInvoice(long id) {
-        return invoiceRepository.findById(id)
-                .map(invoiceMapper::toDTO)
-                .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + id + " not found"));
+    public InvoiceTDO getInvoiceById(long id) {
+        InvoiceEntity invoiceEntity = fetchInvoiceById(id); // Používáme fetchInvoiceById
+        return invoiceMapper.toDTO(invoiceEntity);
     }
 
 
@@ -60,8 +59,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Stav 204
 
     }
-
-
 
     private InvoiceEntity fetchInvoiceById(long id){
         return invoiceRepository.findById(id)

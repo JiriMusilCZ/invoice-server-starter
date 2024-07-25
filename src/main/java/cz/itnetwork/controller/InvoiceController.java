@@ -27,11 +27,11 @@ public class InvoiceController {
     }
     @GetMapping("/invoices/{invoiceId}")
     public InvoiceTDO getInvoice(@PathVariable Long invoiceId){
-        return invoiceService.getInvoice(invoiceId);
+        return invoiceService.getInvoiceById(invoiceId);
     }
 
     @DeleteMapping("/invoices/{invoiceId}")
-    public ResponseEntity<Void> deleteInvoice(@PathVariable("invoiceId") long invoiceId) {
+    public ResponseEntity<Void> deleteInvoice(@PathVariable long invoiceId) {
         return invoiceService.removeInvoiceById(invoiceId);
     }
 

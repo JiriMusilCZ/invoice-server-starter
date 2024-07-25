@@ -12,7 +12,7 @@ public interface InvoiceService {
 
     List<InvoiceTDO> getInvoices();
 
-    InvoiceTDO getInvoice(long id);
+    InvoiceTDO getInvoiceById(long id);
 
     ResponseEntity<Void> removeInvoiceById(long id);
 }
