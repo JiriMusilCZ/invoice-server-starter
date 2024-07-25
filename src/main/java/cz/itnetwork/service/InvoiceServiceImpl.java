@@ -49,4 +49,6 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .map(invoiceMapper::toDTO)
                 .orElseThrow(() -> new EntityNotFoundException("Invoice with id " + id + " not found"));
     }
+
+
 }
