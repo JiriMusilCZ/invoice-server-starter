@@ -36,6 +36,7 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+
     @PostMapping("/persons")
     public PersonDTO addPerson(@RequestBody PersonDTO personDTO) {
         return  personService.addPerson(personDTO);

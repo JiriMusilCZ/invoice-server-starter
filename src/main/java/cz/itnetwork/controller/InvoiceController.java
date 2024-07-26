@@ -21,19 +21,27 @@ public class InvoiceController {
         return invoiceService.addInvoice(invoiceDTO);
     }
 
+
+
     @GetMapping("/invoices")
     public List<InvoiceTDO> getInvoices() {
         return invoiceService.getInvoices();
-    }
-    @GetMapping("/invoices/{invoiceId}")
-    public InvoiceTDO getInvoice(@PathVariable Long invoiceId){
-        return invoiceService.getInvoiceById(invoiceId);
     }
 
     @DeleteMapping("/invoices/{invoiceId}")
     public ResponseEntity<Void> deleteInvoice(@PathVariable long invoiceId) {
         return invoiceService.removeInvoiceById(invoiceId);
     }
+
+    @GetMapping("/invoices/{invoiceId}")
+    public InvoiceTDO getInvoice(@PathVariable Long invoiceId) {
+        return invoiceService.getInvoiceById(invoiceId);
+    }
+
+//    public InvoiceTDO updateInvoice(@PathVariable Long invoiceId, @RequestBody InvoiceTDO invoiceTDO) {
+//        return ;
+//    }
+
 
 
 }

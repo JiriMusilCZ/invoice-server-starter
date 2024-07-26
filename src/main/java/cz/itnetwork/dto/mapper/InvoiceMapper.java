@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 public interface InvoiceMapper {
 
     InvoiceTDO toDTO(InvoiceEntity source);
+
     InvoiceEntity toEntity(InvoiceTDO source);
 
 }
