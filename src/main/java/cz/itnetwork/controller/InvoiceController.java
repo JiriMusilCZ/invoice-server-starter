@@ -22,7 +22,6 @@ public class InvoiceController {
     }
 
 
-
     @GetMapping("/invoices")
     public List<InvoiceTDO> getInvoices() {
         return invoiceService.getInvoices();
@@ -38,10 +37,10 @@ public class InvoiceController {
         return invoiceService.getInvoiceById(invoiceId);
     }
 
-//    public InvoiceTDO updateInvoice(@PathVariable Long invoiceId, @RequestBody InvoiceTDO invoiceTDO) {
-//        return ;
-//    }
-
+    @PutMapping("/invoices/{invoiceId}")
+    public InvoiceTDO updateInvoice(@PathVariable long invoiceId, @RequestBody InvoiceTDO sourceInvoiceTDO) {
+        return invoiceService.updateInvoice(invoiceId, sourceInvoiceTDO);
+    }
 
 
 }

@@ -65,5 +65,19 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .orElseThrow(() -> new NotFoundException("Invoice with id" + id + "wasn't found in the database."));
     }
 
+    public InvoiceTDO updateInvoice(long id, InvoiceTDO sourceInvoiceTDO) {
+
+        InvoiceEntity targetInvoiceEntity = fetchInvoiceById(id);
+
+        sourceInvoiceTDO.setId(id);
+
+        invoiceMapper.updateInvoiceEntity(sourceInvoiceTDO, targetInvoiceEntity);
+
+        targetInvoiceEntity.setBuyer(personRepository.getReferenceById(sourceInvoiceTDO.getBuyer().getId()));
+        targetInvoiceEntity.setSeller(personRepository.getReferenceById(sourceInvoiceTDO.getSeller().getId()));
+        InvoiceEntity savedInvoiceEntity = invoiceRepository.save(targetInvoiceEntity);
+        return invoiceMapper.toDTO(savedInvoiceEntity);
+
+    }
 
 }

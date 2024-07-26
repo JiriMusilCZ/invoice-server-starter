@@ -60,6 +60,24 @@ public class InvoiceMapperImpl implements InvoiceMapper {
         return invoiceEntity;
     }
 
+    @Override
+    public InvoiceEntity updateInvoiceEntity(InvoiceTDO source, InvoiceEntity target) {
+        if ( source == null ) {
+            return target;
+        }
+
+        target.setId( source.getId() );
+        target.setInvoiceNumber( source.getInvoiceNumber() );
+        target.setIssued( source.getIssued() );
+        target.setDueDate( source.getDueDate() );
+        target.setProduct( source.getProduct() );
+        target.setPrice( source.getPrice() );
+        target.setVat( source.getVat() );
+        target.setNote( source.getNote() );
+
+        return target;
+    }
+
     protected PersonDTO personEntityToPersonDTO(PersonEntity personEntity) {
         if ( personEntity == null ) {
             return null;

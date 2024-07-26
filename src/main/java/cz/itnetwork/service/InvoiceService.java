@@ -15,4 +15,7 @@ public interface InvoiceService {
     InvoiceTDO getInvoiceById(long id);
 
     ResponseEntity<Void> removeInvoiceById(long id);
+
+    InvoiceTDO updateInvoice(long invoiceId, InvoiceTDO sourceInvoiceTDO);
+
 }
