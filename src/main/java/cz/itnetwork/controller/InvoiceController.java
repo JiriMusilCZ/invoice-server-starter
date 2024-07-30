@@ -1,5 +1,6 @@
 package cz.itnetwork.controller;
 
+import cz.itnetwork.dto.InvoiceStatisticTDO;
 import cz.itnetwork.dto.InvoiceTDO;
 import cz.itnetwork.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,9 @@ public class InvoiceController {
         return invoiceService.updateInvoice(invoiceId, sourceInvoiceTDO);
     }
 
+    @GetMapping("/statistics")
+    public InvoiceStatisticTDO getStatistics() {
+        return invoiceService.getInvoiceStatistics();
+    }
 
 }

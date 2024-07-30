@@ -1,5 +1,6 @@
 package cz.itnetwork.service;
 
+import cz.itnetwork.dto.InvoiceStatisticTDO;
 import cz.itnetwork.dto.InvoiceTDO;
 import org.springframework.http.ResponseEntity;
 
@@ -18,4 +19,5 @@ public interface InvoiceService {
 
     InvoiceTDO updateInvoice(long invoiceId, InvoiceTDO sourceInvoiceTDO);
 
+    InvoiceStatisticTDO getInvoiceStatistics();
 }

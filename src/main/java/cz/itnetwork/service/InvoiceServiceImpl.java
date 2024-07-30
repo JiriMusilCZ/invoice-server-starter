@@ -1,5 +1,6 @@
 package cz.itnetwork.service;
 
+import cz.itnetwork.dto.InvoiceStatisticTDO;
 import cz.itnetwork.dto.InvoiceTDO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.entity.InvoiceEntity;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +54,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoiceEntity);
     }
 
-
+    @Override
     public ResponseEntity<Void> removeInvoiceById(long id) {
             InvoiceEntity fetchedInvoice = fetchInvoiceById(id);
             invoiceRepository.delete(fetchedInvoice);
@@ -60,11 +62,13 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     }
 
+
     private InvoiceEntity fetchInvoiceById(long id){
         return invoiceRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Invoice with id" + id + "wasn't found in the database."));
     }
 
+    @Override
     public InvoiceTDO updateInvoice(long id, InvoiceTDO sourceInvoiceTDO) {
 
         InvoiceEntity targetInvoiceEntity = fetchInvoiceById(id);
@@ -78,6 +82,11 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceEntity savedInvoiceEntity = invoiceRepository.save(targetInvoiceEntity);
         return invoiceMapper.toDTO(savedInvoiceEntity);
 
+    }
+
+    @Override
+    public InvoiceStatisticTDO getInvoiceStatistics() {
+        return invoiceRepository.findInvoiceStatistic();
     }
 
 }
