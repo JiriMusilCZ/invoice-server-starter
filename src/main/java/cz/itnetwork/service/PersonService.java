@@ -1,6 +1,6 @@
 package cz.itnetwork.service;
 
-import cz.itnetwork.dto.InvoiceTDO;
+import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
 
 import java.util.List;
@@ -34,9 +34,9 @@ public interface PersonService {
 
     PersonDTO updatePerson(PersonDTO updatedPersonDTO, long personId);
 
-    List<InvoiceTDO> getInvoiceBuyer(String identificationNumber);
+    List<InvoiceDTO> getInvoiceBuyer(String identificationNumber);
 
-    List<InvoiceTDO> getInvoiceSeller(String identificationNumber);
+    List<InvoiceDTO> getInvoiceSeller(String identificationNumber);
 
 
 }

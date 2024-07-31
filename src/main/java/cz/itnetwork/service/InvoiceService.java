@@ -1,7 +1,7 @@
 package cz.itnetwork.service;
 
-import cz.itnetwork.dto.InvoiceStatisticTDO;
-import cz.itnetwork.dto.InvoiceTDO;
+import cz.itnetwork.dto.InvoiceDTO;
+import cz.itnetwork.dto.InvoiceStatisticDTO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface InvoiceService {
 
-    InvoiceTDO addInvoice(InvoiceTDO invoiceTDO);
+    InvoiceDTO addInvoice(InvoiceDTO invoiceDTO);
 
-    List<InvoiceTDO> getInvoices();
+    List<InvoiceDTO> getInvoices();
 
-    InvoiceTDO getInvoiceById(long id);
+    InvoiceDTO getInvoiceById(long id);
 
     ResponseEntity<Void> removeInvoiceById(long id);
 
-    InvoiceTDO updateInvoice(long invoiceId, InvoiceTDO sourceInvoiceTDO);
+    InvoiceDTO updateInvoice(long invoiceId, InvoiceDTO sourceInvoiceDTO);
 
-    InvoiceStatisticTDO getInvoiceStatistics();
+    InvoiceStatisticDTO getInvoiceStatistics();
 }

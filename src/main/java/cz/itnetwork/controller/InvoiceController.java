@@ -1,7 +1,7 @@
 package cz.itnetwork.controller;
 
-import cz.itnetwork.dto.InvoiceStatisticTDO;
-import cz.itnetwork.dto.InvoiceTDO;
+import cz.itnetwork.dto.InvoiceDTO;
+import cz.itnetwork.dto.InvoiceStatisticDTO;
 import cz.itnetwork.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,13 @@ public class InvoiceController {
 
 
     @PostMapping("/invoices")
-    public InvoiceTDO addInvoice(@RequestBody InvoiceTDO invoiceDTO) {
+    public InvoiceDTO addInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         return invoiceService.addInvoice(invoiceDTO);
     }
 
 
     @GetMapping("/invoices")
-    public List<InvoiceTDO> getInvoices() {
+    public List<InvoiceDTO> getInvoices() {
         return invoiceService.getInvoices();
     }
 
@@ -34,17 +34,17 @@ public class InvoiceController {
     }
 
     @GetMapping("/invoices/{invoiceId}")
-    public InvoiceTDO getInvoice(@PathVariable Long invoiceId) {
+    public InvoiceDTO getInvoice(@PathVariable Long invoiceId) {
         return invoiceService.getInvoiceById(invoiceId);
     }
 
     @PutMapping("/invoices/{invoiceId}")
-    public InvoiceTDO updateInvoice(@PathVariable long invoiceId, @RequestBody InvoiceTDO sourceInvoiceTDO) {
-        return invoiceService.updateInvoice(invoiceId, sourceInvoiceTDO);
+    public InvoiceDTO updateInvoice(@PathVariable long invoiceId, @RequestBody InvoiceDTO sourceInvoiceDTO) {
+        return invoiceService.updateInvoice(invoiceId, sourceInvoiceDTO);
     }
 
     @GetMapping("/invoices/statistics")
-    public InvoiceStatisticTDO getStatistics() {
+    public InvoiceStatisticDTO getStatistics() {
         return invoiceService.getInvoiceStatistics();
     }
 

@@ -1,6 +1,6 @@
 package cz.itnetwork.dto.mapper;
 
-import cz.itnetwork.dto.InvoiceTDO;
+import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
@@ -15,31 +15,31 @@ import org.springframework.stereotype.Component;
 public class InvoiceMapperImpl implements InvoiceMapper {
 
     @Override
-    public InvoiceTDO toDTO(InvoiceEntity source) {
+    public InvoiceDTO toDTO(InvoiceEntity source) {
         if ( source == null ) {
             return null;
         }
 
-        InvoiceTDO invoiceTDO = new InvoiceTDO();
+        InvoiceDTO invoiceDTO = new InvoiceDTO();
 
-        invoiceTDO.setId( source.getId() );
-        invoiceTDO.setInvoiceNumber( source.getInvoiceNumber() );
-        invoiceTDO.setIssued( source.getIssued() );
-        invoiceTDO.setDueDate( source.getDueDate() );
-        invoiceTDO.setProduct( source.getProduct() );
+        invoiceDTO.setId( source.getId() );
+        invoiceDTO.setInvoiceNumber( source.getInvoiceNumber() );
+        invoiceDTO.setIssued( source.getIssued() );
+        invoiceDTO.setDueDate( source.getDueDate() );
+        invoiceDTO.setProduct( source.getProduct() );
         if ( source.getPrice() != null ) {
-            invoiceTDO.setPrice( source.getPrice() );
+            invoiceDTO.setPrice( source.getPrice() );
         }
-        invoiceTDO.setVat( source.getVat() );
-        invoiceTDO.setNote( source.getNote() );
-        invoiceTDO.setBuyer( personEntityToPersonDTO( source.getBuyer() ) );
-        invoiceTDO.setSeller( personEntityToPersonDTO( source.getSeller() ) );
+        invoiceDTO.setVat( source.getVat() );
+        invoiceDTO.setNote( source.getNote() );
+        invoiceDTO.setBuyer( personEntityToPersonDTO( source.getBuyer() ) );
+        invoiceDTO.setSeller( personEntityToPersonDTO( source.getSeller() ) );
 
-        return invoiceTDO;
+        return invoiceDTO;
     }
 
     @Override
-    public InvoiceEntity toEntity(InvoiceTDO source) {
+    public InvoiceEntity toEntity(InvoiceDTO source) {
         if ( source == null ) {
             return null;
         }
@@ -61,7 +61,7 @@ public class InvoiceMapperImpl implements InvoiceMapper {
     }
 
     @Override
-    public InvoiceEntity updateInvoiceEntity(InvoiceTDO source, InvoiceEntity target) {
+    public InvoiceEntity updateInvoiceEntity(InvoiceDTO source, InvoiceEntity target) {
         if ( source == null ) {
             return target;
         }

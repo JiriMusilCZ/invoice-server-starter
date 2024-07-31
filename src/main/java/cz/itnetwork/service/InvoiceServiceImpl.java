@@ -1,20 +1,18 @@
 package cz.itnetwork.service;
 
-import cz.itnetwork.dto.InvoiceStatisticTDO;
-import cz.itnetwork.dto.InvoiceTDO;
+import cz.itnetwork.dto.InvoiceDTO;
+import cz.itnetwork.dto.InvoiceStatisticDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
 import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +29,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private PersonRepository personRepository;
 
     @Override
-    public InvoiceTDO addInvoice(InvoiceTDO invoiceTDO) {
-        InvoiceEntity invoiceEntity = invoiceMapper.toEntity(invoiceTDO);
+    public InvoiceDTO addInvoice(InvoiceDTO invoiceDTO) {
+        InvoiceEntity invoiceEntity = invoiceMapper.toEntity(invoiceDTO);
         invoiceEntity = invoiceRepository.save(invoiceEntity);
         PersonEntity buyerEntity = personRepository.getReferenceById(invoiceEntity.getBuyer().getId());
         invoiceEntity.setBuyer(buyerEntity);
@@ -41,7 +39,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoiceEntity);
     }
 
-    public List<InvoiceTDO> getInvoices() {
+    public List<InvoiceDTO> getInvoices() {
         return invoiceRepository.findAll()
                 .stream()
                 .map(invoiceEntity -> invoiceMapper.toDTO(invoiceEntity))
@@ -49,7 +47,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceTDO getInvoiceById(long id) {
+    public InvoiceDTO getInvoiceById(long id) {
         InvoiceEntity invoiceEntity = fetchInvoiceById(id); // Používáme fetchInvoiceById
         return invoiceMapper.toDTO(invoiceEntity);
     }
@@ -69,23 +67,23 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceTDO updateInvoice(long id, InvoiceTDO sourceInvoiceTDO) {
+    public InvoiceDTO updateInvoice(long id, InvoiceDTO sourceInvoiceDTO) {
 
         InvoiceEntity targetInvoiceEntity = fetchInvoiceById(id);
 
-        sourceInvoiceTDO.setId(id);
+        sourceInvoiceDTO.setId(id);
 
-        invoiceMapper.updateInvoiceEntity(sourceInvoiceTDO, targetInvoiceEntity);
+        invoiceMapper.updateInvoiceEntity(sourceInvoiceDTO, targetInvoiceEntity);
 
-        targetInvoiceEntity.setBuyer(personRepository.getReferenceById(sourceInvoiceTDO.getBuyer().getId()));
-        targetInvoiceEntity.setSeller(personRepository.getReferenceById(sourceInvoiceTDO.getSeller().getId()));
+        targetInvoiceEntity.setBuyer(personRepository.getReferenceById(sourceInvoiceDTO.getBuyer().getId()));
+        targetInvoiceEntity.setSeller(personRepository.getReferenceById(sourceInvoiceDTO.getSeller().getId()));
         InvoiceEntity savedInvoiceEntity = invoiceRepository.save(targetInvoiceEntity);
         return invoiceMapper.toDTO(savedInvoiceEntity);
 
     }
 
     @Override
-    public InvoiceStatisticTDO getInvoiceStatistics() {
+    public InvoiceStatisticDTO getInvoiceStatistics() {
         return invoiceRepository.findInvoiceStatistic();
     }
 

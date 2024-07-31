@@ -2,12 +2,9 @@ package cz.itnetwork.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.core.SpringVersion;
 
 import java.time.LocalDate;
 
@@ -15,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvoiceTDO {
+public class InvoiceDTO {
 
     @JsonProperty("_id")
     private Long id;

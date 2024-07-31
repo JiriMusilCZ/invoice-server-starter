@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvoiceStatisticTDO {
+public class InvoiceStatisticDTO {
 
     private Long currentYearSum;
     private Long allTimeSum;

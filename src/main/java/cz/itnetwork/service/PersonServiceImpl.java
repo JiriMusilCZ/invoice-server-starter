@@ -21,7 +21,7 @@
  */
 package cz.itnetwork.service;
 
-import cz.itnetwork.dto.InvoiceTDO;
+import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.dto.mapper.PersonMapper;
@@ -112,7 +112,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<InvoiceTDO> getInvoiceBuyer(String identificationNumber) {
+    public List<InvoiceDTO> getInvoiceBuyer(String identificationNumber) {
         List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
 
         // Extract IDs from PersonEntity objects
@@ -130,7 +130,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<InvoiceTDO> getInvoiceSeller(String identificationNumber) {
+    public List<InvoiceDTO> getInvoiceSeller(String identificationNumber) {
         List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
 
         // Extract IDs from PersonEntity objects
