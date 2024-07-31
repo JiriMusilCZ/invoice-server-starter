@@ -43,7 +43,7 @@ public class InvoiceController {
         return invoiceService.updateInvoice(invoiceId, sourceInvoiceTDO);
     }
 
-    @GetMapping("/statistics")
+    @GetMapping("/invoices/statistics")
     public InvoiceStatisticTDO getStatistics() {
         return invoiceService.getInvoiceStatistics();
     }
