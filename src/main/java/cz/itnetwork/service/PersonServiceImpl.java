@@ -23,6 +23,7 @@ package cz.itnetwork.service;
 
 import cz.itnetwork.dto.InvoiceDTO;
 import cz.itnetwork.dto.PersonDTO;
+import cz.itnetwork.dto.PersonStatisticDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.dto.mapper.PersonMapper;
 import cz.itnetwork.entity.InvoiceEntity;
@@ -143,5 +144,10 @@ public class PersonServiceImpl implements PersonService {
         return invoices.stream()
                 .map(invoiceMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PersonStatisticDTO> getAllPersonStatistics() {
+        return personRepository.findPersonRevenue();
     }
 }
