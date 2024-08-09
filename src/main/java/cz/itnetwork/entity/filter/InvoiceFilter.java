@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class InvoiceFilter {
 
-    private Integer buyerID;
-    private Integer sellerID;
+    private Long buyerID;
+    private Long sellerID;
     private Integer minPrice;
     private Integer maxPrice;
     private String product;

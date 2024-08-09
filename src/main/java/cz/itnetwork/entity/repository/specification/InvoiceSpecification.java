@@ -21,17 +21,16 @@ public class InvoiceSpecification implements Specification<InvoiceEntity> {
     public Predicate toPredicate(Root<InvoiceEntity> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
-        // Přidej JOIN na Seller
-        Join<InvoiceEntity, PersonEntity> sellerJoin = root.join(InvoiceEntity_.SELLER);
 
-        // Filtrování podle SellerID
         if (filter.getSellerID() != null) {
+            Join<InvoiceEntity, PersonEntity> sellerJoin = root.join(InvoiceEntity_.SELLER);
             predicates.add(criteriaBuilder.equal(sellerJoin.get(PersonEntity_.ID), filter.getSellerID()));
         }
 
         // Filtrování podle BuyerID, přidání JOIN na Buyer
-        Join<InvoiceEntity, PersonEntity> buyerJoin = root.join(InvoiceEntity_.BUYER);
+
         if (filter.getBuyerID() != null) {
+            Join<InvoiceEntity, PersonEntity> buyerJoin = root.join(InvoiceEntity_.BUYER);
             predicates.add(criteriaBuilder.equal(buyerJoin.get(PersonEntity_.ID), filter.getBuyerID()));
         }
 
@@ -44,7 +43,11 @@ public class InvoiceSpecification implements Specification<InvoiceEntity> {
             predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(InvoiceEntity_.PRICE), filter.getMinPrice()));
         }
 
-        // Vrátí AND kombinaci všech predikátů
+        if (filter.getProduct() != null) {
+            predicates.add(criteriaBuilder.like(root.get(InvoiceEntity_.PRODUCT), "%" + filter.getProduct() + "%"));
+        }
+
+
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 }

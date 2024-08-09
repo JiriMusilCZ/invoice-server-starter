@@ -10,6 +10,7 @@ import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
 import cz.itnetwork.entity.repository.specification.InvoiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public List<InvoiceDTO> getInvoices(InvoiceFilter invoiceFilter) {
         InvoiceSpecification invoiceSpecification = new InvoiceSpecification(invoiceFilter);
 
-        return invoiceRepository.findAll(invoiceSpecification)
+        return invoiceRepository.findAll(invoiceSpecification, PageRequest.of(0, invoiceFilter.getLimit()))
                 .stream()
                 .map(invoiceEntity -> invoiceMapper.toDTO(invoiceEntity))
                 .collect(Collectors.toList());
