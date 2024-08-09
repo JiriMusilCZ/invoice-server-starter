@@ -5,8 +5,10 @@ import cz.itnetwork.dto.InvoiceStatisticDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
+import cz.itnetwork.entity.filter.InvoiceFilter;
 import cz.itnetwork.entity.repository.InvoiceRepository;
 import cz.itnetwork.entity.repository.PersonRepository;
+import cz.itnetwork.entity.repository.specification.InvoiceSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +41,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoiceEntity);
     }
 
-    public List<InvoiceDTO> getInvoices() {
-        return invoiceRepository.findAll()
+    public List<InvoiceDTO> getInvoices(InvoiceFilter invoiceFilter) {
+        InvoiceSpecification invoiceSpecification = new InvoiceSpecification(invoiceFilter);
+
+        return invoiceRepository.findAll(invoiceSpecification)
                 .stream()
                 .map(invoiceEntity -> invoiceMapper.toDTO(invoiceEntity))
                 .collect(Collectors.toList());
