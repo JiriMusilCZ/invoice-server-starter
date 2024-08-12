@@ -10,5 +10,5 @@ public class InvoiceFilter {
     private Integer minPrice;
     private Integer maxPrice;
     private String product;
-    private Integer limit = 10;
+    private Integer limit = 50;
 }
