@@ -19,6 +19,15 @@ import org.webjars.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Implementation of the {@link InvoiceService} interface providing business logic for managing invoices.
+ *
+ * <p>This class provides methods for creating, retrieving, updating, and deleting invoices, as well as obtaining invoice statistics.</p>
+ *
+ * @version 1.0
+ * @since 2024
+ */
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
 
@@ -42,6 +51,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.toDTO(invoiceEntity);
     }
 
+    @Override
     public List<InvoiceDTO> getInvoices(InvoiceFilter invoiceFilter) {
         InvoiceSpecification invoiceSpecification = new InvoiceSpecification(invoiceFilter);
 
@@ -62,10 +72,15 @@ public class InvoiceServiceImpl implements InvoiceService {
             InvoiceEntity fetchedInvoice = fetchInvoiceById(id);
             invoiceRepository.delete(fetchedInvoice);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Stav 204
-
     }
 
-
+    /**
+     * Fetches an invoice by its unique identifier.
+     *
+     * @param id The unique identifier of the invoice.
+     * @return The invoice entity.
+     * @throws NotFoundException if no invoice with the given ID is found.
+     */
     private InvoiceEntity fetchInvoiceById(long id){
         return invoiceRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Invoice with id" + id + "wasn't found in the database."));

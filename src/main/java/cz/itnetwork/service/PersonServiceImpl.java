@@ -37,6 +37,15 @@ import org.webjars.NotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Implementation of the {@link PersonService} interface.
+ * Provides operations for managing person records, including creating, updating, removing, and fetching persons,
+ * as well as retrieving associated invoices and statistics.
+ *
+ * <p>This service interacts with the database through the {@link PersonRepository} and {@link InvoiceRepository}
+ * and maps entities to DTOs using {@link PersonMapper} and {@link InvoiceMapper}.</p>
+ */
 @Service
 public class PersonServiceImpl implements PersonService {
 
@@ -52,6 +61,7 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private InvoiceMapper invoiceMapper;
 
+    @Override
     public PersonDTO addPerson(PersonDTO personDTO) {
         PersonEntity entity = personMapper.toEntity(personDTO);
         entity = personRepository.save(entity);
