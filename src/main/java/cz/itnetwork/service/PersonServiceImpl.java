@@ -124,37 +124,49 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<InvoiceDTO> getInvoiceBuyer(String identificationNumber) {
-        List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
-
-        // Extract IDs from PersonEntity objects
-        List<Long> personIds = persons.stream()
-                .map(PersonEntity::getId)
-                .collect(Collectors.toList());
-
-        // Find all invoices where the buyer_id matches any of the IDs in personIds
-        List<InvoiceEntity> invoices = invoiceRepository.findByBuyerIdIn(personIds);
-
-        // Map the InvoiceEntity objects to InvoiceDTO
-        return invoices.stream()
-                .map(invoiceMapper::toDTO)
-                .collect(Collectors.toList());
+        return getInvoicesByPersonType(identificationNumber, true);
     }
 
     @Override
     public List<InvoiceDTO> getInvoiceSeller(String identificationNumber) {
+        return getInvoicesByPersonType(identificationNumber, false);
+    }
+
+    /**
+     * Retrieves a list of invoices based on the person's identification number and the type of association (buyer or seller).
+     *
+     * <p>This method consolidates the logic for fetching invoices where a person is either a buyer or a seller,
+     * depending on the value of the {@code isBuyer} parameter. The method first retrieves all persons matching
+     * the given identification number, then extracts their IDs to query the invoice repository.</p>
+     *
+     * <p>The method returns a list of {@link InvoiceDTO} objects mapped from the corresponding {@link InvoiceEntity}
+     * objects fetched from the database.</p>
+     *
+     * @param identificationNumber The unique identification number associated with the persons to search for.
+     * @param isBuyer              A boolean flag that determines whether to fetch invoices where the person is a buyer or a seller.
+     *                             If {@code true}, the method retrieves invoices where the person's ID matches the buyer ID.
+     *                             If {@code false}, it retrieves invoices where the person's ID matches the seller ID.
+     * @return A list of {@link InvoiceDTO} objects representing the invoices associated with the specified person type.
+     * @throws NotFoundException If no persons are found with the given identification number.
+     */
+    private List<InvoiceDTO> getInvoicesByPersonType(String identificationNumber, boolean isBuyer) {
         List<PersonEntity> persons = personRepository.findByIdentificationNumber(identificationNumber);
 
-        // Extract IDs from PersonEntity objects
         List<Long> personIds = persons.stream()
                 .map(PersonEntity::getId)
                 .collect(Collectors.toList());
 
-        List<InvoiceEntity> invoices = invoiceRepository.findBySellerIdIn(personIds);
+        List<InvoiceEntity> invoices = isBuyer ?
+                invoiceRepository.findByBuyerIdIn(personIds) :
+                invoiceRepository.findBySellerIdIn(personIds);
 
         return invoices.stream()
                 .map(invoiceMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+
+
 
     @Override
     public List<PersonStatisticDTO> getAllPersonStatistics() {
