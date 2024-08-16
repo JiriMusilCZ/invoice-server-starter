@@ -1,0 +1,12 @@
+cz.itnetwork
+cz.itnetwork.configuration
+cz.itnetwork.constant
+cz.itnetwork.controller
+cz.itnetwork.controller.advice
+cz.itnetwork.dto
+cz.itnetwork.dto.mapper
+cz.itnetwork.entity
+cz.itnetwork.entity.filter
+cz.itnetwork.entity.repository
+cz.itnetwork.entity.repository.specification
+cz.itnetwork.service
